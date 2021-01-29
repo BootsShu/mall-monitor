@@ -8,7 +8,7 @@ import sched
 
 
 class Monitor:
-    def __init__(self, email='1656704949@qq.com', rate=60, note=60 * 60):
+    def __init__(self, email='', rate=60, note=60 * 60):
         self.scheduler = sched.scheduler(time.time, time.sleep)
         self.goods_dict = {}
         self.db = DB()

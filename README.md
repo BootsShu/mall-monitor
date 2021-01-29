@@ -54,11 +54,22 @@ Goods:
 | 属性 | 解释 | 类型 | 备注 |
 | :----: | :----: | :----: | :----: |
 | id | 商品编号 | String(20) | primary_key=True |
+| dname | 自定义商品名 | TEXT | nullable=True |
 | want | 期望价格 | FLOAT | nullable=False |
 | status | 运行状态 | BOOLEAN | nullable=False |
 
 ## 邮箱
 修改`config.cfg`的参数，可以上网搜索怎么申请qq邮箱smtp密码~
+```
+[mail]
+host     = smtp.qq.com
+port     = 25
+user     = xxxxxxxxxx@qq.com
+pass     = xxxxxxxxxxxxxxxx
+sender   = xxxxxxxxxx@qq.com
+```
+## docker启动(推荐)
+执行dockerfile
 ```
 [mail]
 host     = smtp.qq.com

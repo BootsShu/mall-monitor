@@ -2,7 +2,11 @@ FROM python:2.7.13
 
 WORKDIR /usr/src/app
 
-COPY requirements.txt ./
+# COPY requirements.txt ./
+
+RUN pip config set global.index-url http://mirrors.aliyun.com/pypi/simple
+
+RUN pip config set install.trusted-host mirrors.aliyun.com
 
 COPY . .
 

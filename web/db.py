@@ -1,3 +1,4 @@
+#coding=UTF-8
 from sqlalchemy import create_engine, Column, String, FLOAT, BOOLEAN
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -11,6 +12,7 @@ class Goods(Base):
     __tablename__ = 'goods'
     id = Column(String(20), primary_key=True)  # 商品编号 主键
     want = Column(FLOAT, nullable=False)  # 期望价格
+    dname = Column(String(20), nullable=True)  # 自定义商品名（抓取不到~）
     status = Column(BOOLEAN, nullable=False)  # 运行状态
 
 
@@ -29,13 +31,14 @@ class DB:
         for goods in goodss:
             item = {}
             item['id'] = goods.id
+            item['dname'] = goods.dname
             item['want'] = goods.want
             item['status'] = goods.status
             result[goods.id] = item
         return result
 
-    def add(self, id, want, status):
-        goods = Goods(id=id, want=want, status=status)
+    def add(self, id, want, status, dname=""):
+        goods = Goods(id=id, want=want, status=status, dname=dname)
         self.session.add(goods)
         self.session.commit()
 
@@ -59,7 +62,7 @@ if __name__ == '__main__':
     db = DB()
 
     print("添加测试：")
-    db.add('111111', 111.00, False)
+    db.add('111111', 111.00, False, '测试1')
     print(db.query())
 
     print("修改测试：")

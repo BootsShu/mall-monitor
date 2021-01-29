@@ -42,6 +42,8 @@
             <form class="form-inline">
                 <label for="id">商品编号:</label>
                 <input type="text" class="form-control" id="id" placeholder="输入商品编号">
+                <label for="dname">商品名称:</label>
+                <input type="text" class="form-control" id="dname" placeholder="(抓取失败时显示)">
                 <label for="want">期望价格:</label>
                 <input type="text" class="form-control" id="want" placeholder="输入期望价格">
                 <div class="form-check">
@@ -142,7 +144,7 @@
                 html += '<td>' + index + '</td>';
                 html += '<td>' + item.id + '</td>';
                 html += '<td>';
-                html += '<a href=' + item.url + '>' + item.name.substring(0, 30) + '......</a>';
+                html += '<a href=' + item.url + '>' + (item.name || item.dname || '').substring(0, 30) + '</a>';
                 html += '</td>';
                 html += '<td>';
                 html += '<button type="button" class="btn btn-info btn-sm" onclick="update_want(' + item.id + ')">￥' + item.want + '</button>';
@@ -163,7 +165,7 @@
                 html += '<a class="dropdown-item" href="#" onclick="update_status(' + item.id + ', false)">暂停</a>';
                 html += '</div>';
                 html += '</div>';
-                html += '<button type="button" class="btn btn-info btn-sm" onclick="history(' + item.id + ')">历史</button>';
+                html += '<button type="button" class="btn btn-info btn-sm" onclick="history(\'' + item.url + '\')">历史</button>';
                 html += '<button type="button" class="btn btn-danger btn-sm" onclick="remove(' + item.id + ')">删除</button>';
                 html += '</td>';
                 html += '</tr>';
@@ -177,17 +179,18 @@
 
     function add() {
         let id = $('#id').val();
+        let dname = $('#dname').val();
         let want = $('#want').val();
         let status = $('#status').prop('checked');
-        if (id === '' || want === '') {
-            alert('请输入商品编号和期望价格！');
+        if (id === '' || want === '' || dname === '') {
+            alert('请输入商品编号名称和期望价格！');
             return;
         }
 
         $.ajax({
             url: 'add',
             type: 'POST',
-            data: {'id': id, 'want': want, 'status': status},
+            data: {'id': id, 'want': want, dname: dname, 'status': status},
             dataType: 'json',
             success: function (result) {
                 if (result.code === 200) {
@@ -347,7 +350,9 @@
         });
     }
 
-    function history(id) {
+    function history(url) {
+        window.open('http://tool.manmanbuy.com/HistoryLowest.aspx?url='+url)
+        return;
         $.ajax({
             url: 'history',
             type: 'GET',

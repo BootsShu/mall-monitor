@@ -1,3 +1,4 @@
+#coding=UTF-8
 from db import DB
 from crawl import Crawl
 from goods import Goods
@@ -21,15 +22,15 @@ class Monitor:
         result = self.db.query()
         print('----------加载数据----------')
         for id, item in result.items():
-            self.goods_dict[id] = Goods(item['id'], item['want'], item['status'])
+            self.goods_dict[id] = Goods(item['id'], item['want'], item['status'], item['dname'])
             print(self.goods_dict[id].__dict__)
         print('----------加载完成----------')
 
     # 添加商品
-    def add(self, id, want, status=True):
+    def add(self, id, want, status=True, dname=''):
         if id not in self.goods_dict.keys():
-            self.db.add(id, want, status)
-            goods = Goods(id, want, status)
+            self.db.add(id, want, status, dname)
+            goods = Goods(id, want, status, dname)
             name, price, date = self.crawl.get(id)
             goods.update(name, price, date)
             self.goods_dict[id] = goods

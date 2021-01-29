@@ -1,3 +1,4 @@
+#coding=UTF-8
 class Response:
     @staticmethod
     def status(code, message, data):

@@ -1,8 +1,10 @@
+#coding=UTF-8
 class Goods:
-    def __init__(self, id, want, status):
+    def __init__(self, id, want, status, dname):
         self.id = id  # 商品编号
         self.want = want  # 期望价格
         self.status = status  # 运行状况
+        self.dname = dname  # 商品名称
         self.name = None  # 商品名称
         self.price = None  # 当前价格
         self.date = None  # 记录日期

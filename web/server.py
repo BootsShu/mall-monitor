@@ -1,3 +1,4 @@
+#coding=UTF-8
 from flask import Flask, render_template, request
 from monitor import Monitor
 from response import Response
@@ -21,7 +22,8 @@ def add():
         id = data['id']
         want = float(data['want'])
         status = data['status'] == 'true'
-        res = monitor.add(id, want, status)
+        dname = data['dname']
+        res = monitor.add(id, want, status, dname)
         if res:
             return Response.success(message='添加成功')
         else:
@@ -114,6 +116,7 @@ def get():
         goods['status'] = item.status  # 运行状况
         goods['url'] = item.url  # 购买链接
         goods['name'] = item.name  # 商品名称
+        goods['dname'] = item.dname  # 商品名称
         goods['price'] = item.price  # 当前价格
         goods['date'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(item.date))  # 记录日期
         result.append(goods)
@@ -134,4 +137,4 @@ def history():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)  # 防止debug=True状态初始化两次
+    app.run(host='0.0.0.0', port=5858, debug=True, use_reloader=False)  # 防止debug=True状态初始化两次

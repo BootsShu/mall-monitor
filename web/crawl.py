@@ -1,3 +1,4 @@
+#coding=UTF-8
 from bs4 import BeautifulSoup  # pip install beautifulsoup4
 import execjs  # pip install PyExecJS
 import requests

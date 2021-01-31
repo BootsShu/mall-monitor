@@ -3,17 +3,24 @@ from db import DB
 from crawl import Crawl
 from goods import Goods
 from mail import Mail
+from dingding import Dingding
 import time
 import sched
+import configparser
 
 
 class Monitor:
     def __init__(self, email='', rate=60, note=60 * 60):
+        config='config.cfg'
+        cfg = configparser.ConfigParser()
+        cfg.read(config)
+        self.option = cfg.get('select', 'option')
         self.scheduler = sched.scheduler(time.time, time.sleep)
         self.goods_dict = {}
         self.db = DB()
         self.crawl = Crawl()
         self.mail = Mail()
+        self.ding = Dingding()
         self.email = [email]  # 电子邮箱
         self.rate = rate  # 刷新频率
         self.note = note  # 通知频率
@@ -88,7 +95,12 @@ class Monitor:
                 ########## 检查是否符合发送条件 ##########
                 # 满足通知间隔时间 & 当前价格小于期望价格
                 if (date - goods.note >= self.note) and (price <= goods.want):
-                    self.mail.send(self.email, name, price, goods.want, goods.url)
+                    if (self.option == 'mail'):
+                        print('邮件发送')
+                        self.mail.send(self.email, name, price, goods.want, goods.url)
+                    else:
+                        print('钉钉发送')
+                        self.ding.send(name, price, goods.want, goods.url)
                     goods.update_note(date)
         print('----------刷新数据----------')
         for goods in self.goods_dict.values():

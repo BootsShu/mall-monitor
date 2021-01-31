@@ -10,7 +10,7 @@ RUN pip config set install.trusted-host mirrors.aliyun.com
 
 COPY . .
 
-RUN wget https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-x64.tar.xz && tar -xf node-v12.16.1-linux-x64.tar.xz -C /opt
+RUN wget https://npm.taobao.org/mirrors/node/latest-v12.x/node-v12.16.1-linux-x64.tar.xz && tar -xf node-v12.16.1-linux-x64.tar.xz -C /opt
 
 ENV EXECJS_RUNTIME=$PATH:/opt/node-v12.16.1-linux-x64/bin
 

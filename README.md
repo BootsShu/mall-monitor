@@ -58,8 +58,9 @@ Goods:
 | want | 期望价格 | FLOAT | nullable=False |
 | status | 运行状态 | BOOLEAN | nullable=False |
 
-## 邮箱
-修改`config.cfg`的参数，可以上网搜索怎么申请qq邮箱smtp密码~
+## 配置
+修改`config.cfg`的参数，可以上网搜索怎么申请qq邮箱smtp密码~，记得开放25端口
+钉钉token获取方式自行搜索
 ```
 [mail]
 host     = smtp.qq.com
@@ -67,14 +68,18 @@ port     = 25
 user     = xxxxxxxxxx@qq.com
 pass     = xxxxxxxxxxxxxxxx
 sender   = xxxxxxxxxx@qq.com
+
+[dingding]
+webhook  = https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxxxxxxxxxxx
+
+[select]
+# 邮件和钉钉通知二选一
+option   = dingding
 ```
 ## docker启动(推荐)
 执行dockerfile
 ```
-[mail]
-host     = smtp.qq.com
-port     = 25
-user     = xxxxxxxxxx@qq.com
-pass     = xxxxxxxxxxxxxxxx
-sender   = xxxxxxxxxx@qq.com
+// 生成镜像
+docker build -t jdspider .
+docker run --name jdspider -p 5858:5858 -d jdspider
 ```

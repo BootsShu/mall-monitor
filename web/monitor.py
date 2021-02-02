@@ -7,13 +7,16 @@ from dingding import Dingding
 import time
 import sched
 import configparser
+import os
 
 
 class Monitor:
     def __init__(self, email='', rate=60, note=60 * 60):
         config='config.cfg'
         cfg = configparser.ConfigParser()
-        cfg.read(config)
+        parentDirPath=os.path.dirname(os.path.abspath(__file__))
+        path=parentDirPath+'/config/'+config 
+        cfg.read(path)
         self.option = cfg.get('select', 'option')
         self.scheduler = sched.scheduler(time.time, time.sleep)
         self.goods_dict = {}

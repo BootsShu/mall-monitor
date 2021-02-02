@@ -3,12 +3,15 @@ import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 import configparser
+import os
 
 
 class Mail:
     def __init__(self, config='config.cfg'):
         cfg = configparser.ConfigParser()
-        cfg.read(config)
+        parentDirPath=os.path.dirname(os.path.abspath(__file__))
+        path=parentDirPath+'/config/'+config 
+        cfg.read(path)
         self.mail_host = cfg.get('mail', 'host')
         self.mail_port = cfg.get('mail', 'port')
         self.mail_user = cfg.get('mail', 'user')

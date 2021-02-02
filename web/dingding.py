@@ -2,11 +2,14 @@
 import configparser
 import requests
 import json
+import os
 
 class Dingding:
     def __init__(self, config='config.cfg'):
         cfg = configparser.ConfigParser()
-        cfg.read(config)
+        parentDirPath=os.path.dirname(os.path.abspath(__file__))
+        path=parentDirPath+'/config/'+config 
+        cfg.read(path)
         self.webhook = cfg.get('dingding', 'webhook')
         self.header = {
             "Content-Type": "application/json",

@@ -77,9 +77,7 @@ webhook  = https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxxxxxxxxxxx
 option   = dingding
 ```
 ## docker启动(推荐)
-执行dockerfile
+配置文件放在/data/jd-spider/config目录下，配置好后挂载到容器中
 ```
-// 生成镜像
-docker build -t jdspider .
-docker run --name jdspider -p 5858:5858 -d jdspider
+docker run --name jdspider -p 5858:5858 -v /data/jd-spider/config:/usr/src/app/web/config -d yimijianfang/jd-spider
 ```
